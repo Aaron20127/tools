@@ -1,0 +1,37 @@
+ # capture image from web camera of HIKVISION and usb camera
+ 
+ general:
+    autosave: False # whether auto save image, if it is true, images of all cameras will be saved at the same time with a rate of fps.
+    fps: 1 # auto save rate
+ 
+ cameras: 
+  - enable: True # whether use this camera
+    type: web_camera
+    user: 'admin' 
+    passwd: 'aaron20127'
+    ip: 192.168.0.103  
+    undistort: # undistort image before save image
+        enable: false
+        distortion_parameters: [-0.4672, 0.116] # distortion parameter, k1, k2
+        image_size: [1080, 1920] # row and column
+        intrinsic_parameters: [2490.4, 2462.3, 848.1342, 488.4334] # camera parameter, fx, fy, cx, cy
+        retain_black_edge: 0  # 0-1, 1- retain black edge, 0- do not retain black edge
+    resize:
+        enable: false
+        image_size: [416, 416]
+
+
+  - enable: False
+    type: usb_camera
+    port: 0
+    resize:
+      enable: false
+      image_size: [416, 416]
+    undistort:
+      distortion_parameters: [-0.4672, 0.116]
+      enable: false
+      image_size: [480, 640]
+      intrinsic_parameters: [2490.4, 2462.3, 848.1342, 488.4334]
+      retain_black_edge: 0
+
+
