@@ -12,11 +12,13 @@ Images of all cameras will be saved at the same time, and it will create folder 
 There need a symbol of `-` in the front of every configuration of one camera.
 
 #### general
-`autosave`: Whether auto save image, if it is true, images of all cameras will be saved at the same time with a rate of fps; if it is false, images will be saved when you press the Enter key.
-
-`fps`  Auto save rate, integer
+```
+`autosave`:  Whether auto save image, if it is true, images of all cameras will be saved at the same time with a rate of fps; if it is false, images will be saved when you press the Enter key.
+`fps`: Auto save rate, integer
+ ```
  
 #### cameras
+```
 `enable`:  Whether use this camera
 
 `type`: web_camera, usb_camera
@@ -34,6 +36,6 @@ There need a symbol of `-` in the front of every configuration of one camera.
 `resize`: Resize image
     `enable`: Whether resize image
     `image_size`: New size
-
+```
 
 
