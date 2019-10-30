@@ -5,7 +5,7 @@ You only need to configure the `cfg.yaml` file, then run
 ```bash
 python camera.py
 ```
-Images of all cameras will be saved at the same time, and it will create folder of `image` to save all images.
+Images of all cameras will be saved at the same time, and it will create folder of `capture_camera/images` to save all images.
 
 ### Configuration
 #### Note
