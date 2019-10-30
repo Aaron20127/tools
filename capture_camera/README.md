@@ -1,13 +1,13 @@
 ## Auto save image form hikvison web camera or usb camera 
 
-### run
+### Run
 You only need to configure the `cfg.yaml` file, then run
 ```bash
 python camera.py
 ```
 Images of all cameras will be saved at the same time, and it will create folder of `image` to save all images.
 
-### configuration
+### Configuration
 #### Note
 There need a symbol of `-` in the front of every configuration of one camera.
 
