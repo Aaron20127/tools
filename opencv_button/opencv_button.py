@@ -1,11 +1,7 @@
 """
 A image control panel to interact with mouse. There are two type of button.
-When you use this class, you must use
-"while button.is_run():
-    ...
-"
-in the main thread to let the program exit normally when 'Ctrl+c' signal coming.
 
+in the main thread to let the program exit normally when 'Ctrl+c' signal coming.
 counter_button:
    [counter_button, name, (init, step, min, max), (shift_x, shift_y)]
    
@@ -23,10 +19,8 @@ counter_button:
         click right mouse button: increse couter
         click mouse wheel: increase step size
         scroll the mouse wheel: accelerate the speed of count
-
 one_click_button:
    ['one_click_button', 'name', (shift_x, shift_y)]
-
    Paremeter:
         one_click_button: button type.
         name:           button name.
@@ -35,6 +29,8 @@ one_click_button:
    Usage:
         click left mouse button: make the value true 
 
+API:
+    opencv_button.get_value(): Get button value.
 """
 
 import time
@@ -46,7 +42,7 @@ import numpy as np
 import math
 
 class opencv_button:
-    def __init__(self, buttons, panel_size=(500, 380)):
+    def __init__(self, buttons, panel_size=(400, 380)):
         """
             Parameters:
                 buttons: add buttons, list.
@@ -55,7 +51,6 @@ class opencv_button:
                         ['counter_button', 'camera1', [0, 1, 0,10000], [0, 0]],
                         ['one_click_button', 'save', (0, 50)]
                 ]
-
                 panel_size: size of control panel. list.
                 
         """
@@ -65,14 +60,6 @@ class opencv_button:
 
         # 2.stop signal
         self._stop = False
-        signal.signal(signal.SIGINT,self.signal_capture)
-        signal.signal(signal.SIGHUP,self.signal_capture)
-        signal.signal(signal.SIGTERM,self.signal_capture)
-
-        # 3.start control panel
-        p = threading.Thread(target=self.run, args=())
-        p.setDaemon = True
-        p.start()
 
     def create_control_button(self, buttons):
         # 1. get button
@@ -161,12 +148,9 @@ class opencv_button:
         cv2.namedWindow('panel')
         cv2.setMouseCallback('panel',self.event_callback)
 
-        while not self._stop:
-            self.update_panel()
-            cv2.imshow('panel',self.panel)
-            cv2.waitKey(10)
-
-        # cv2.destroyAllWindows()
+        self.update_panel()
+        cv2.imshow('panel',self.panel)
+        cv2.waitKey(20)
 
 
     def event_callback(self, event, x, y, flags,param):
@@ -211,21 +195,19 @@ class opencv_button:
 
 
     def get_value(self):
+        """ get button value
+        @return: button value, list
+        """
+        # 1. run
+        self.run()
+
+        # 2. get value
         ret = []
         for butt in self.buttons:
             ret.append(butt['value'])
             if butt['type'] == 'one_click_button':
                 butt['value'] = False
         return ret
-
-    def stop(self):
-        self._stop = True
-
-    def signal_capture(self, signum, frame):
-        self.stop()
-
-    def is_run(self):
-        return not self._stop 
 
 
 
@@ -241,8 +223,6 @@ if __name__ == "__main__":
 
     button = opencv_button(buttons)
 
-    while button.is_run():
-        time.sleep(2)
+    while True:
         camera1, camera2, camera3, label, save = button.get_value()
         print(camera1, camera2, camera3, label, save)
-
